@@ -9,7 +9,7 @@ from api import apiKEY
 st.title("News key Words Bias Detector")
 
 #Reorganize the selections
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([4,5])
 with col1:
     #Enter Country
     st.text_input("Enter Country Name") 
