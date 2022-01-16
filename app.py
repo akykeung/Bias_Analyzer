@@ -14,7 +14,11 @@ st.title("News key Words Bias Detector")
 col1, col2 = st.columns([4,5])
 with col1:
     #Enter Country
-    user = st.text_input("Enter Country Name") 
+    try:
+        user = st.text_input("Enter Country Name") 
+
+    except:
+        st.write('Please enter the full name of the country, ie. United States')
 
 with col2:
     #Selection of categories
@@ -43,16 +47,9 @@ if btn:
         else:
             st.write('Error retrieving author')
         st.write('Article Link: ',article['url'])
-        st.write(article['source']['name'])
-        st.markdown(spacy.displacy.render(nlp(article['description']), style = 'ent', options = {"colors": {'Possible bias detected':'#ffd966'}}),    unsafe_allow_html=True)
-        st.image(article['urlToImage'])
-
-
-
-    # HTML -> markdown code to display code
-
-    #output_html = spacy.displacy.render(doc, style='ent', jupyter=False, options = {"colors": {'Possible bias detected':'#ffd966'}})
-
-    # Render the html code as a markdown with html enabled
-
-    #st.markdown(output_html,    unsafe_allow_html=False)
+        st.markdown(f"<h1 style ='background-color:gray; text-align: center; border-radius:20px;'> {article['source']['name']} </h1>", unsafe_allow_html=True)
+        st.markdown(spacy.displacy.render(nlp(article['description']), style = 'ent', options = {"colors": {'Possible bias detected':'#FF0000'}}),    unsafe_allow_html=True)
+        if article['urlToImage']:    
+            st.image(article['urlToImage'])
+        else:
+            st.markdown("<h3 style=text-align: center;'> Error retrieving Image...</h3>", unsafe_allow_html=True)
