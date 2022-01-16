@@ -2,7 +2,7 @@
 import streamlit as st
 import requests
 import pycountry
-#import spacy
+import spacy
 #from api import apiKEY
 
 apiKEY = '4edfd5e480fb42098234171216e701a3'
@@ -45,10 +45,10 @@ if btn:
         st.image(article['urlToImage'])
 
 
-        # HTML -> markdown code to display code
+    # HTML -> markdown code to display code
 
-        output_html = spacy.displacy.render(doc, style='ent', jupyter=False, options = {"colors": {'Possible bias detected':'#ffd966'})
+    output_html = spacy.displacy.render(doc, style='ent', jupyter=False, options = {"colors": {'Possible bias detected':'#ffd966'}})
 
-        # Render the html code as a markdown with html enabled
+    # Render the html code as a markdown with html enabled
 
-        st.markdown(output_html,    unsafe_allow_html=False)
+    st.markdown(output_html,    unsafe_allow_html=False)
