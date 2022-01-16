@@ -14,14 +14,14 @@ To run the program locally, the following libraries will be need to be imported 
 - import spacy
 
 ## Executing program
-How to run the program
-  postgresql: "~> 9.3.0"
-# Authors
-Contributors names and contact info
+Once libraries have been installed, the program can be run simply with the command "streamlit run app.py" or running the IDE on your local machine.
 
-ex. Dominique Pizzie
-ex. @DomPizzie
+# Authors
+Adrian Keung
+
+LinkedIn: https://www.linkedin.com/in/adrian-keung/
 
 # Version History
 0.1
-- Initial Release
+- Initial Release with only language bias detection. Future version to include sentiment analysis and detection of other biases including bias by image, headline and repetition.
+
