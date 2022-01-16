@@ -40,15 +40,19 @@ if btn:
         #Author
         if article['author']:
             st.write('Written by: ', article['author'])
+        else:
+            st.write('Error retrieving author')
+        st.write('Article Link: ',article['url'])
         st.write(article['source']['name'])
-        doc = nlp(st.write(article['description']))
+        st.markdown(spacy.displacy.render(nlp(article['description']), style = 'ent', options = {"colors": {'Possible bias detected':'#ffd966'}}),    unsafe_allow_html=True)
         st.image(article['urlToImage'])
+
 
 
     # HTML -> markdown code to display code
 
-    output_html = spacy.displacy.render(doc, style='ent', jupyter=False, options = {"colors": {'Possible bias detected':'#ffd966'}})
+    #output_html = spacy.displacy.render(doc, style='ent', jupyter=False, options = {"colors": {'Possible bias detected':'#ffd966'}})
 
     # Render the html code as a markdown with html enabled
 
-    st.markdown(output_html,    unsafe_allow_html=False)
+    #st.markdown(output_html,    unsafe_allow_html=False)
