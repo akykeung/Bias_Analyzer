@@ -2,8 +2,10 @@
 import streamlit as st
 import requests
 import pycountry
-import spacy
-from api import apiKEY
+#import spacy
+#from api import apiKEY
+
+apiKEY = '4edfd5e480fb42098234171216e701a3'
 
 #Create title of web page
 st.title("News key Words Bias Detector")
@@ -12,27 +14,41 @@ st.title("News key Words Bias Detector")
 col1, col2 = st.columns([4,5])
 with col1:
     #Enter Country
-    st.text_input("Enter Country Name") 
+    user = st.text_input("Enter Country Name") 
 
 with col2:
     #Selection of categories
-    st.radio('Choose what type of news you are interested in:', ('Technology', 'Business', 'Politics', 'Sports'))
+    category = st.radio('Choose what type of news you are interested in:', ('Technology', 'Business', 'Politics', 'Sports'))
+    btn = st.button('Enter')
 
-#Loading with progress
-with st.progress("Please wait for the text to be analyzed..."):
-    nlp = spacy.load("en_pipeline")
+if btn:
+    country = pycountry.countries.get(name=user).alpha_2
+    url = f"https://newsapi.org/v2/top-headlines?country={country}&category={category}&apiKey={apiKEY}"
+    r = requests.get(url)
+    
+    #JSON File creation
+    r = r.json()
+    articles = r['articles']
 
-#Text entry for user input
-input = st.text_area(label = "Enter your text to get biased words")
+    # Create a doc object
+    nlp = spacy.load('en_pipeline')
 
-# Create a doc object
 
-doc = nlp(input)
+    for article in articles:
+        st.header(article['title'])
+        st.write("Published at: ", article['publishedAt'])
+        #Author
+        if article['author']:
+            st.write('Written by: ', article['author'])
+        st.write(article['source']['name'])
+        doc = nlp(st.write(article['description']))
+        st.image(article['urlToImage'])
 
-# HTML -> markdown code to display code
 
-output_html = spacy.displacy.render(doc, style='ent', jupyter=False, options = {"colors": {'Possible bias detected':'#ffd966'})
+        # HTML -> markdown code to display code
 
-# Render the html code as a markdown with html enabled
+        output_html = spacy.displacy.render(doc, style='ent', jupyter=False, options = {"colors": {'Possible bias detected':'#ffd966'})
 
-st.markdown(output_html,    unsafe_allow_html=False)
+        # Render the html code as a markdown with html enabled
+
+        st.markdown(output_html,    unsafe_allow_html=False)
