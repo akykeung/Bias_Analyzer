@@ -1,9 +1,22 @@
 #Import all dependencies and libraries
 import streamlit as st
+import requests
+import pycountry
 import spacy
+from api import apiKEY
 
 #Create title of web page
-st.title("Key Words Bias Detector")
+st.title("News key Words Bias Detector")
+
+#Reorganize the selections
+col1, col2 = st.columns(2)
+with col1:
+    #Enter Country
+    st.text_input("Enter Country Name") 
+
+with col2:
+    #Selection of categories
+    st.radio('Choose what type of news you are interested in:', ('Technology', 'Business', 'Politics', 'Sports'))
 
 #Loading with progress
 with st.progress("Please wait for the text to be analyzed..."):
